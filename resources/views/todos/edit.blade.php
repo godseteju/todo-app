@@ -39,31 +39,46 @@
                     </div>
                     <div class="card-body">
                         <h4> Edit Form </h4>
-                    <form method="post" action="{{ route('todos.update') }}">
-                        @csrf
-                        @method('PUT')
-                        <input type="hidden" name="todo_id" value="{{ $todo->id }}">
-  <div class="mb-3">
-    <label class="form-label">Title</label>
-    <input type="text" class="form-control" id="title" name="title" value="{{ $todo->title }}">
-  </div>
-  <div class="mb-3">
-    <label class="form-label">Description</label>
-    <textarea class="form-control" id="description" name="description" cols="5" rows="5">
-        {{ $todo->description }}
-    </textarea>
-  </div>
-    <div class="mb-3">
-    <label for="">Status</label>
-    <select name="is_completed" class="form-control" required="required">
-        <option disabled selected>Select Option</option>
-        <option value="1">Done</option>
-        <option value="0">In Progress</option>
-    </select>
-    </div>
-  
-  <button type="submit" class="btn btn-primary">Update</button>
-</form>
+
+                        @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
+                        <form method="post" action="{{ route('todos.update',$todo->id) }}" enctype="multipart/form-data">
+                            @csrf
+                            @method('PUT')
+                            <input type="hidden" name="todo_id" value="{{ $todo->id }}">
+                            <div class="mb-3">
+                                <label class="form-label">Title</label>
+                                <input type="text" class="form-control" id="title" name="title" value="{{ $todo->title }}">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Description</label>
+                                <textarea class="form-control" id="description" name="description" cols="5" rows="5">
+                                    {{ $todo->description }}
+                                </textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Upload Image</label>
+                                <input type="file" class="form-control" id="image" name="image">
+                            </div>
+                                <div class="mb-3">
+                                <label for="">Is Completed</label>
+                                <select name="is_completed" class="form-control" required="required">
+                                    <option disabled selected>Select Option</option>
+                                    <option value="1">Done</option>
+                                    <option value="0">In Progress</option>
+                                </select>
+                                </div>
+                            
+                            <button type="submit" class="btn btn-primary">Update</button>
+                        </form>
                     </div>
                 </div>
 

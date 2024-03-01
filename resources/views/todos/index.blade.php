@@ -67,9 +67,10 @@
     <table class="table">
   <thead>
     <tr>
-      <th>Title</th>
-      <th>Description</th>
-      <th>Completed</th>
+      <th>@sortablelink('title')</th>
+      <th>@sortablelink('description')</th>
+      <th>Image</th>
+      <th>@sortablelink('is_completed')</th>
       <th>Actions</th>
     </tr>
   </thead>
@@ -78,6 +79,9 @@
     <tr>
       <td>{{ $todo->title }}</td>
       <td>{{ $todo->description }}</td>
+      <td>
+        <img src="{{ asset($todo->image) }}" style="width: 70px; height: 70px;" alt="Img" />
+      </td>
       <td>
         @if ($todo->is_completed == 1)
             <a class="btn btn-success" href="">completed</a>
@@ -88,7 +92,7 @@
       <td id="outer">
         <a class="inner btn btn-sm btn-success" href="{{ route('todos.show', $todo->id) }}">View</a>
         <a class="inner btn btn-sm btn-info" href="{{ route('todos.edit', $todo->id) }}">Edit</a>
-        <form method="post" action="{{ route('todos.destroy') }}" class="inner">
+        <form method="post" action="{{ route('todos.destroy',$todo->id) }}" class="inner">
             @csrf
             @method('DELETE')
             <input type="hidden" name="todo_id" value="{{ $todo->id }}">
